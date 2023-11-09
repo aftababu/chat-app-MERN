@@ -44,12 +44,21 @@ app.use("/api/v1", chatsRoutes);
 app.use("/api/v1", messageRoutes);
 app.use(errorMiddleware);
 const __dirname1 = path.resolve();
+<<<<<<< HEAD
 
   app.use(express.static(path.join(__dirname1, "/frontend/dist")));
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname1, "frontend", "dist", "index.html"));
   });
+=======
+
+app.use(express.static(path.join(__dirname1, "/frontend/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname1, "frontend", "dist", "index.html"));
+});
+>>>>>>> a9f3155 (second commit 3)
 
 const server = app.listen(process.env.PORT, () => {
   console.log("🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸");
@@ -91,3 +100,4 @@ io.on("connection", (socket) => {
     socket.leave(userData._id);
   });
 });
+

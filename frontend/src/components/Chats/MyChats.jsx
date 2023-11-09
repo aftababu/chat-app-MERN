@@ -1,15 +1,23 @@
-import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Image,
+  SelectField,
+  Stack,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { ChatState } from "../../context/ChatContext";
 import axios from "../../axios";
 import ChatLoader from "./ChatLoader";
-import { getSender } from "../../config/ChatLogic";
+import { getSender, getSenderPic } from "../../config/ChatLogic";
 import GroupChatModel from "./GroupChatModel";
 
 const MyChats = () => {
   const [loggedInUser, setLoggedInUser] = useState();
-  const { chats, selectedChat, setChats, setSelectedChat } =
-    ChatState();
+  const { chats, selectedChat, setChats, setSelectedChat } = ChatState();
   const toast = useToast();
   const fetchChats = useCallback(async () => {
     try {
@@ -34,11 +42,10 @@ const MyChats = () => {
       fetchChats();
     }
   }, [fetchChats, setLoggedInUser]);
-  // console.log(chats);
   return (
     <>
       <Box
-        display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+        display={{ base: selectedChat?._id ? "none" : "flex", md: "flex" }}
         flexDir={"column"}
         alignItems={"center"}
         p={3}
@@ -47,39 +54,41 @@ const MyChats = () => {
         borderRadius={"lg"}
         borderWidth={"1px"}
       >
-        <Box
-          pb={3}
-          px={3}
-          fontSize={{ base: "28px", md: "30px" }}
-          fontFamily={"Work sans"}
-          display={"flex"}
-          w={"100%"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          My Chats
-          <GroupChatModel>
-            <Button
-              display={"flex"}
-              fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-              rightIcon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M11 13H5v-2h6V5h2v6h6v2h-6v6h-2v-6Z"
-                  />
-                </svg>
-              }
-            >
-              New Group Chat
-            </Button>
-          </GroupChatModel>
-        </Box>
+           <Box
+            pb={3}
+            px={3}
+            fontSize={{ base: "28px", md: "24px" }}
+            fontFamily={"Work sans"}
+            display={"flex"}
+            w={"100%"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+           Chats
+            <GroupChatModel>
+              <Button
+                display={"flex"}
+                fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+                rightIcon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M11 13H5v-2h6V5h2v6h6v2h-6v6h-2v-6Z"
+                    />
+                  </svg>
+                }
+              >
+                New Group Chat
+              </Button>
+            </GroupChatModel>
+          </Box>
+       
+
         <Box
           display="flex"
           flexDir="column"
@@ -102,12 +111,32 @@ const MyChats = () => {
                   py={2}
                   borderRadius={"lg"}
                   key={chat._id}
+                  display={"flex"}
+                  justifyContent={"space-between"}
                 >
                   <Text>
                     {!chat.isGroupChat && loggedInUser
                       ? getSender(loggedInUser, chat.users)
                       : chat.chatName}
                   </Text>
+                  {!chat?.isGroupChat ? (
+                    <Image
+                      w={8}
+                      h={8}
+                      borderRadius={"full"}
+                      alt="user pic"
+                      src={getSenderPic(loggedInUser, chat.users)}
+                    />
+                  ) : (
+                    <Image
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBBZS2qtC9nwwFHGdt_QCxFWGvEyyNoq25pj8Snpqpg&s"
+                      w={8}
+                      h={8}
+                      borderRadius={"full"}
+                      p={1}
+                      bgColor={"red"}
+                    />
+                  )}
                 </Box>
               ))}
             </Stack>

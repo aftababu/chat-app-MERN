@@ -2,6 +2,7 @@ import {
   Box,
   FormControl,
   IconButton,
+  Image,
   Input,
   Spinner,
   Text,
@@ -116,7 +117,7 @@ const SingleChat = () => {
       }
     });
   });
-  console.log(notification);
+  // console.log(notification);
   // console.log(socketConnection, selectedChat);
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
@@ -223,7 +224,7 @@ const SingleChat = () => {
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
               {isTyping ? (
                 <div>
-                <Spinner size={'sm'}/>
+               <Image src="/typing.gif" alt="typing.." w={8} h={8} />
             
                 </div>
               ) : (

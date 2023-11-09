@@ -20,7 +20,7 @@ const ChatProvider = ({ children }) => {
     if (storedUserInfo) {
       setUser(JSON.parse(storedUserInfo));
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (user && user.email) {
