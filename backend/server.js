@@ -55,7 +55,7 @@ if (process.env.NODE_ENV === "production") {
     res.send("app.is on builiding");
   });
 }
-const server = app.listen(4200, () => {
+const server = app.listen(process.env.PORT, () => {
   console.log("🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸");
 });
 
