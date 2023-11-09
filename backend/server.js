@@ -7,11 +7,11 @@ const fileUpload = require("express-fileupload");
 const cloudinary = require("cloudinary");
 const path = require("path");
 const app = express();
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config({
-    path: "./backend/config/config.env",
-  });
-}
+// if (process.env.NODE_ENV !== "production") {
+//   require("dotenv").config({
+//     path: "./backend/config/config.env",
+//   });
+// }
 const corsOptions = {
   origin: "https://chat-app-aftab.onrender.com",
   // origin: "http://localhost:5173",
@@ -44,17 +44,13 @@ app.use("/api/v1", chatsRoutes);
 app.use("/api/v1", messageRoutes);
 app.use(errorMiddleware);
 const __dirname1 = path.resolve();
-if (process.env.NODE_ENV === "production") {
+
   app.use(express.static(path.join(__dirname1, "/frontend/dist")));
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname1, "frontend", "dist", "index.html"));
   });
-} else {
-  app.get("/", (req, res) => {
-    res.send("app.is on builiding");
-  });
-}
+
 const server = app.listen(process.env.PORT, () => {
   console.log("🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸🇵🇸");
 });
